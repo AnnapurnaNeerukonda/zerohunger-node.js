@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">     
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Users</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    nav {
+      background-color: #6edc1a;
+      padding: 10px 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 18px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      height: 250px;
+      box-shadow: 0 4px 8px 0 rgba(76, 175, 80, 0.4);
+    }
+
+    .request-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 10px 4px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    h3 {
+      color: #008080;
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+      padding: 20px;
+      border: 2px solid #008080;
+      border-radius: 10px;
+      background-color: #ffffff;
+    }
+
+    h2 {
+      color: #4CAF50;
+      font-size: 32px;
+      font-weight: bold;
+      margin: 0;
+      padding: 20px;
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="motivate.html">Home</a>
+    <a href="../users/postdisplay.html">View Posts</a>
+    <a href="../users/postinterface.html">Create Post</a>
+  </nav>
+  <h2 align="center" style="color:#4CAF50">Donor Details</h2>
+
+  <!-- Image for Donors -->
+  <img src="https://previews.123rf.com/images/rawpixel/rawpixel1603/rawpixel160317416/53962605-fundraising-donation-heart-charity-welfare-concept.jpg" alt="Donors Image" width="100%" height="500px " style="margin-bottom: 3rem;">
+  <h3 style="margin-bottom: 3rem;">"Give not to be seen, but to make a difference. Your donation has the power to create ripples of positive change, shaping a better tomorrow for those in need. "</h3>
+
+  <div id="activeUsersContainer" class="container">
+    <div class="row" id="activeUsersRow"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      const activeUsersRow = document.getElementById('activeUsersRow');
+
+      try {
+        // Fetch data from the server
+        const response = await fetch('https://zerohunger.onrender.com/activeusers');
+        const data = await response.json();
+        console.log(data);
+
+        // Check if the 'activeUsers' property exists in the response
+        if (data.activeUsers) {
+          // Iterate through the active users and create a card for each
+          Object.values(data.activeUsers).forEach((user, index) => {
+            const card = document.createElement('div');
+            card.className = 'col-md-4';
+            const innerCard = document.createElement('div');
+            innerCard.className = 'card';
+
+            const pickupDetails = document.createElement('p');
+            pickupDetails.innerHTML = "Pickup:" + ` ${user.dataToStore.pickup}`;
+
+            const locationImage = document.createElement('img');
+            locationImage.src = 'location.html';
+            locationImage.alt = 'Location Image';
+            locationImage.style.width = '20px';
+
+            const timeDetails = document.createElement('p');
+            timeDetails.innerHTML = "Time:" + ` ${user.dataToStore.time}`;
+
+            const timeImage = document.createElement('img');
+            timeImage.src = 'time.html';
+            timeImage.alt = 'Time Image';
+            timeImage.style.width = '20px';
+
+            const requestButton = document.createElement('button');
+            requestButton.className = 'request-btn';
+            requestButton.textContent = 'Request';
+
+            // Set the user ID as a data attribute
+            requestButton.setAttribute('data-user-id', user.uid);
+
+            requestButton.addEventListener('click', function () {
+              // Get the user ID from the button's data attribute
+              const userId = requestButton.getAttribute('data-user-id');
+
+              // Open the corresponding modal
+              $(`#requestModal${index}`).modal('show');
+
+              // Event listener for form submission
+              const form = document.getElementById('modalForm'); // Add an id to the form
+              form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                // Get form data
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                console.log(userId,email)
+                try {
+                  // Send form data and user ID to the server
+                  const submitResponse = await fetch('http://localhost:4000/submitRequest', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, subject, message, userId }),
+                  });
+
+                  // Handle the server response (optional)
+                  const submitData = await submitResponse.json();
+                  console.log(submitData);
+                  alert()
+                  // Close the modal
+                  $(`#requestModal${index}`).modal('hide');
+                } catch (error) {
+                  console.error('Error submitting form:', error);
+                }
+              });
+            });
+
+            innerCard.appendChild(pickupDetails);
+            innerCard.appendChild(locationImage);
+            innerCard.appendChild(timeDetails);
+            innerCard.appendChild(timeImage);
+            innerCard.appendChild(requestButton);
+            card.appendChild(innerCard);
+            activeUsersRow.appendChild(card);
+
+            // Check if it's the third card to start a new row
+            if ((index + 1) % 3 === 0) {
+              activeUsersRow.appendChild(document.createElement('div'));
+            }
+
+            // Create a Bootstrap modal for each user
+            const modal = document.createElement('div');
+            modal.className = 'modal fade';
+            modal.id = `requestModal${index}`;
+            modal.tabIndex = '-1';
+            modal.role = 'dialog';
+            modal.ariaLabelledby = `requestModalLabel${index}`;
+            modal.ariaHidden = 'true';
+
+            const modalDialog = document.createElement('div');
+            modalDialog.className = 'modal-dialog';
+            modalDialog.role = 'document';
+
+            const modalContent = document.createElement('div');
+            modalContent.className = 'modal-content';
+
+            // Modal header
+            const modalHeader = document.createElement('div');
+            modalHeader.className = 'modal-header';
+            modalHeader.innerHTML = `<h5 class="modal-title" id="requestModalLabel${index}">Request Details</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>`;
+
+            // Modal body (form)
+            const modalBody = document.createElement('div');
+            modalBody.className = 'modal-body';
+
+            // Create form with id attribute
+            const form = document.createElement('form');
+            form.id = 'modalForm';
+            form.innerHTML = `<div class="form-group">
+                              <label for="email">Email:</label>
+                              <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="form-group">
+                              <label for="subject">Subject:</label>
+                              <input type="text" class="form-control" id="subject" required>
+                            </div>
+                            <div class="form-group">
+                              <label for="message">Message:</label>
+                              <textarea class="form-control" id="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>`;
+
+            modalBody.appendChild(form);
+
+            modalContent.appendChild(modalHeader);
+            modalContent.appendChild(modalBody);
+            modalDialog.appendChild(modalContent);
+            modal.appendChild(modalDialog);
+            document.body.appendChild(modal);
+          });
+        } else {
+          console.error('No active users data found in the response.');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1500px;
+            width: 100%;
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 60px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-control-file {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 4px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        .navbar {
+            background-color: #6edc1a;
+            padding: 10px 0;
+            width: 100%;
+            position:sticky;
+            top:0%;
+            left:0%;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: #fff;
+            padding:1%;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="motivate.html">Home</a>
+        <a href="postdisplay.html">View Posts</a>
+        <a href="postinterface.html">Create Post</a>
+    </nav>
+    <div class="container">
+        <!-- Post Interface -->
+        <div class="card">
+            <div class="card-body">
+                <!-- Post Text Area -->
+                <div class="form-group">
+                    <label for="postTitle">Title:</label>
+                    <input type="text" class="form-control" id="postTitle" placeholder="Enter title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="postContent">Description:</label>
+                    <textarea class="form-control" id="postContent" rows="5" placeholder="Enter description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="postLocation">Location:</label>
+                    <input type="text" class="form-control" id="postLocation" placeholder="Enter location" required>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="form-group">
+                    <label for="postImage">Upload Image:</label>
+                    <input type="file" class="form-control-file" id="postImage" accept="image/*" required>
+                </div>
+
+                <!-- Post Button -->
+                <button type="button" class="btn btn-primary" onclick="submitPost()">Post</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function submitPost() {
+            try {
+                // Fetch and process data from the input fields
+                const postTitle = document.getElementById('postTitle').value;
+                const postContent = document.getElementById('postContent').value;
+                const postLocation = document.getElementById('postLocation').value;
+                const postImage = document.getElementById('postImage').files[0];
+
+                // Create a FormData object to send the data as a multipart/form-data
+                const formData = new FormData();
+                formData.append('uid', 'asdfvsdfgd44'); // Replace with the actual user ID
+                formData.append('title', postTitle);
+                formData.append('description', postContent);
+                formData.append('location', postLocation);
+                formData.append('image', postImage);
+
+                // Make a POST request to the server's create-post endpoint
+                const response = await fetch('http://localhost:4000/create-post', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                // Check if the request was successful (status code 200)
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+
+                }
+
+                // Parse the JSON response
+                const responseData = await response.json();
+
+                // Log the response or handle it as needed
+                console.log(responseData);
+
+                // Reset form fields if needed
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postContent').value = '';
+                document.getElementById('postLocation').value = '';
+                document.getElementById('postImage').value = '';
+            } catch (error) {
+                console.error('Error submitting post:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>

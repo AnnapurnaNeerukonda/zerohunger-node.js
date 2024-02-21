@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-image: url('https://thumbs.dreamstime.com/z/different-food-text-donate-wooden-background-top-view-donation-concept-184381799.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: grayscale(70%) opacity(0.7);
+            z-index: -1;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-around;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 30%;
+            text-align: center;
+            margin: 0 10px;
+        }
+
+        .card img {
+            width: 100%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Add additional styling for your content if needed */
+        .card-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+    <title>Your Page Title</title>
+</head>
+<body>
+    <div class="content">
+        <div class="card">
+            <!-- Content for the first card -->
+            <img src="https://tse3.mm.bing.net/th?id=OIP.V0FC0IygW4ChoTALXl3-nwHaEU&pid=Api&P=0&h=180" alt="Image 1">
+            <h3 class="card-title">Want to be a donor</h3>
+            <br>
+            <button onclick="registr()">Register</button>
+        </div>
+        <div class="card">
+            <!-- Content for the second card -->
+            <img src="https://tse1.mm.bing.net/th?id=OIP.tFJLqNIznMSmW4tF-GfhfAHaEW&pid=Api&P=0&h=180" alt="Image 2">
+            <h3 class="card-title">If you are orphanage<br>administor</h3>
+            <button onclick="oregi()">Register</button>
+        </div>
+        <div class="card">
+            <!-- Content for the third card -->
+            <img src="https://tse3.mm.bing.net/th?id=OIP.BLMlr3juUvnQoKubobP3TAHaES&pid=Api&P=0&h=180" alt="Image 3">
+            <h3 class="card-title">If you are an organizer</h3>
+            <br>
+            <button onclick="nregi()">Register</button>
+        </div>
+    </div>
+    <script>
+      function  registr(){
+        window.location.href="./users/signup.html"
+      }
+      function  oregi(){
+        window.location.href="./orphanages/osignup.html"
+      }
+      function  nregi(){
+        window.location.href="./ngo/nsignup.html"
+      }
+    </script>
+</body>
+</html>

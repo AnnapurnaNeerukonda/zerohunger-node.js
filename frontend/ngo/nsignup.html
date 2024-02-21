@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        #btn {
+            background-color: white;
+            border-radius: 20px;
+            border-color: rgb(40, 165, 107);
+            width: 90px;
+            height: 45px;
+            padding: 10px;
+            font-size: 18px;
+            color: rgb(40, 165, 107);
+            margin-left: 100px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container signupForm">
+        <form onsubmit="return signUp(event)">
+            <div class="form signup">
+                <h2 style="color: white;">Sign Up</h2>
+                <div class="inputBox">
+                    <input type="email" required="required" id="signupEmail" placeholder="Email">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <div class="inputBox">
+                    <input type="text" required="required" id="signupName" placeholder="OrganisationName">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <div class="inputBox">
+                    <input type="password" required="required" id="signupPassword" placeholder="Password">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="inputBox">
+                    <input type="password" required="required" placeholder="Re-enter Password">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="inputBox">
+                    <input type="text" required="required" id="signupLocation" placeholder="Location">
+                    <i class="fa-regular fa-map-marker"></i>
+                </div>
+                <div class="inputBox">
+                    <button type="submit" id="btn">Sign Up</button>
+                </div>
+                <p>Already have an account? <a href="nlogin.html" class="signin">LogIn</a></p>
+            </div>
+        </form>
+    </div>
+    <script>
+        async function signUp(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('signupEmail').value;
+            const name = document.getElementById('signupName').value;
+            const address = document.getElementById('signupLocation').value;
+            const password = document.getElementById('signupPassword').value;
+
+            try {
+                const response = await fetch("http://localhost:4000/nregister", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password, name,location })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    console.log('Registration successful:', data);
+                } else {
+                    console.error('Registration failed:', data.message || 'Unknown error');
+                }
+            } catch (error) {
+                console.error('Error during registration:', error.message || 'Unknown error');
+            }
+
+            return false;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Users</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav {
+            background-color: #6edc1a;
+            padding: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+    .card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      height: 250px; /* Set the desired height for each card */
+      box-shadow: 0 4px 8px 0 rgba(76, 175, 80, 0.4); /* Green box shadow */
+    }
+
+    .request-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 10px 4px; /* Adjusted margin to move the button down */
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    h3 {
+            color: #008080;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            padding: 20px;
+            border: 2px solid #008080;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+        h2 {
+            color: #4CAF50;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            background-color: #ffffff;
+        }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="motivate.html">Home</a>
+    <a href="postdisplay.html">View Posts</a>
+    <a href="postinterface.html">Create Post</a>
+</nav>
+  <h2 align="center" style="color:#4CAF50">Donor Details</h2>
+
+  <!-- Image for Donors -->
+  <img src="https://previews.123rf.com/images/rawpixel/rawpixel1603/rawpixel160317416/53962605-fundraising-donation-heart-charity-welfare-concept.jpg" alt="Donors Image" width="100%" height="500px " style="margin-bottom: 3rem;">
+  <h3 style="margin-bottom: 3rem;">"Give not to be seen, but to make a difference. Your donation has the power to create ripples of positive change, shaping a better tomorrow for those in need. "</h3>
+
+  <div id="activeUsersContainer" class="container">
+    <div class="row" id="activeUsersRow"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      const activeUsersRow = document.getElementById('activeUsersRow');
+
+      try {
+        // Fetch data from the server
+        const response = await fetch('https://zerohunger.onrender.com/activeusers');
+        const data = await response.json();
+        console.log(data)
+        // Check if the 'activeUsers' property exists in the response
+        if (data.activeUsers) {
+          // Iterate through the active users and create a card for each
+          Object.values(data.activeUsers).forEach((user, index) => {
+            const card = document.createElement('div');
+            card.className = 'col-md-4'; // Bootstrap class for a dynamic layout
+           console.log("user",user)
+            const innerCard = document.createElement('div');
+            innerCard.className = 'card';
+      
+            const pickupDetails = document.createElement('p');
+            pickupDetails.innerHTML = "Pickup:"+` ${user.dataToStore.pickup}`;
+
+            // Create an img element for the location
+            const locationImage = document.createElement('img');
+            locationImage.src = 'location.html'; // Replace with the actual image source
+            locationImage.alt = 'Location Image';
+            locationImage.style.width = '20px'; // Adjust the width as needed
+
+            const timeDetails = document.createElement('p');
+            timeDetails.innerHTML = "Time:" +`${user.dataToStore.time}`;
+
+            // Create an img element for the time
+            const timeImage = document.createElement('img');
+            timeImage.src = 'time.html'; // Replace with the actual image source
+            timeImage.alt = 'Time Image';
+            timeImage.style.width = '20px'; // Adjust the width as needed
+
+            const requestButton = document.createElement('button');
+            requestButton.className = 'request-btn';
+            requestButton.textContent = 'Request';
+
+            innerCard.appendChild(pickupDetails);
+            innerCard.appendChild(locationImage); // Append the location image
+            innerCard.appendChild(timeDetails);
+            innerCard.appendChild(timeImage); // Append the time image
+            innerCard.appendChild(requestButton);
+            card.appendChild(innerCard);
+            activeUsersRow.appendChild(card);
+
+            // Check if it's the third card to start a new row
+            if ((index + 1) % 3 === 0) {
+              activeUsersRow.appendChild(document.createElement('div')); // Create a new row
+            }
+          });
+        } else {
+          console.error('No active users data found in the response.');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Discover Your Inner Self and Achieve Mental Wellbeing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="donars.css">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.section1 {
+    position: relative;
+    height: 100vh;
+    background: url('https://tse4.mm.bing.net/th?id=OIP.MezMd7-WePd3i97lBhBRmwHaE8&pid=Api&P=0&h=180') center/cover no-repeat fixed;
+    background-size: 100% 100%;
+}
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.nav-container {
+    position: relative;
+    z-index: 1;
+}
+
+.navbar {
+    background-color:rgb(191, 52, 17);
+    padding: 10px 0;
+    width: 100%;
+    z-index: 1000;
+    font-family: 'Noto Serif';
+}
+
+.nav-links {
+    width: 30%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.navbar-brand {
+    font-size: 2.3rem;
+    margin-left: 10px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: rgb(12, 9, 9);
+    font-size: 15px;
+}
+
+.new-navbar{
+    display: none;
+}
+.here{
+    color:rgb(12, 11, 11);
+}
+.glad {
+    line-height: 2;
+}
+
+.glad h2 {
+    font-size: 2.5rem;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.glad p {
+    font-size: 1.3rem;
+}
+
+.coming-soon {
+    text-decoration: none;
+    border: 2px solid black;
+    color: black;
+    padding: 2% 7% !important;
+    border-radius: 25px;
+}
+
+.coming-soon:hover {
+    background-color: black ;
+    color: white;
+}
+
+.struggles .card {
+    border: none;
+    margin-bottom: 20px;
+    /* Adjust the margin to control the gap between cards */
+}
+
+.whatsapp{
+    text-decoration: none;
+    color:black;
+    padding:2% 7% !important;
+    font-size: 1.3rem;
+ }
+ .whatsapplinks a{
+       text-decoration: none ;
+       color: black;
+       font-size: 1.2rem;
+ }
+.whatsapplinks a{
+    border-radius: 25px ;
+    background-color: black;
+    color: white;
+    padding: 2% 4% !important;
+}
+ .socialmedia img{
+    width:5%;
+ }
+ .socialmedia a{
+    padding-left: 50px;
+ }
+ .signup{
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 10px 30px;
+    background-color: black;
+    text-decoration: none;
+    color: white;
+    font-family: 'Noto Serif';
+ }
+#emailInput{
+    border: none;
+    border-bottom-style: solid;
+}
+.text{
+    background-color: black;
+    padding: 40px;
+}
+
+.leftnavbar{
+    background-color: rgb(8, 7, 7);
+    position: fixed;
+    z-index: 1200;
+    height: 100vh;
+    width: 100%;
+   
+}
+.close{
+    float: right;
+    margin-bottom: 10%;
+    font-size: 1.8rem;
+}
+.leftnavbar .left-nav-links{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap:30px
+}
+.left-nav-links a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.3rem !important;
+    font-family: 'Noto Serif';
+}
+.hidden-content {
+        display: none;
+    }
+    #toggleIcon{
+        color: white;
+        font-size: 1.8rem;
+    }
+
+@media (max-width: 767px) {
+    
+
+    .navbar {
+        display: none; 
+    }
+
+    .new-navbar {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       padding:0px 20px
+    }
+}
+@media (max-width:430px){
+    #toggleIcon {
+        font-size: 1.5rem;
+    }
+    .navbar-brand{
+        font-size: 1.8rem;
+    }
+    .nav-container{
+        padding: 0px 20px !important;        
+    }
+    .socialmedia img{
+        width: 8vw;
+    }
+    .section1 {
+        position: relative;
+         height: 90vh; 
+        background: url('atmanlogo.png') center/cover no-repeat fixed;
+     background-size: 100% 100%;  
+    }
+    
+    
+}
+</style>
+</head>
+
+<body>
+  <div class="leftnavbar hidden-content" id="hiddenContent">
+    <div class="close" id="closeIcon">
+      <i class="fa-solid fa-xmark"></i>
+    </div>
+    <div class="left-nav-links my-5">
+      <a href="index.html">Home</a>
+      <a href="app.html">Our App</a>
+      <a href="about.html">About Us</a>
+      <a href="blog.html">Blogs</a>
+    </div>
+  </div>
+
+  <div class="section1">
+    <div class="overlay"></div>
+    <div class="nav-container">
+      <div class="navbar">
+        <a class="navbar-brand text-light" href="index.html">Zero Hunger</a>
+
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="app.html">Our App</a>
+          <a href="about.html">About Us</a>
+          <a href="blog.html">Blogs</a>
+        </div>
+      </div>
+
+      <div class="new-navbar">
+        <a class="navbar-brand text-light" href="index.html">aTman</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#newNavbarNav"
+          aria-controls="newNavbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <i id="toggleIcon" class="fa-solid fa-bars"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="container glad my-5 py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <h2 class="mb-5 here">We're glad you're here</h2>
+        <p class="mb-5">A compassionate donor who chooses to contribute food is a
+
+          vital ally in the fight against hunger. Their altruistic act transcends the
+          simple act of giving sustenance; it becomes a lifeline for individuals and communities
+          facing food insecurity. Every donated meal is a gesture of empathy, offering nourishment
+
+          and hope to those in need. By supporting initiatives that channel surplus food to the hungry,
+          these donors play a pivotal role in minimizing food waste while addressing the pressing issue of hunger. Their
+          generosity fosters a sense of shared responsibility, uniting communities in the common pursuit of ensuring
+          that no one goes to bed hungry.
+
+        </p>
+
+        <div class="container glad my-lg-5 py-lg-5">
+          <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+
+              <div class="whatsapplinks p-2">
+                <p class="fs-5 p-3">
+                </p>
+                <a href="activeusers.html" class="m-5 pt-5">
+                  URGENCY NEED FOR FOOD</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+</body>
+
+</html>

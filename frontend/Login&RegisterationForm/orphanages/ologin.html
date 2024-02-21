@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        #btn{
+            background-color: white;
+            border-radius: 20px;
+            border-color: rgb(40, 165, 107);
+            width: 90px;
+            height: 45px;
+            padding: 10px;
+            font-size: 22px;
+            color: rgb(40, 165, 107);
+            margin-left: 100px;
+            
+        }
+        h2{
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container loginForm">
+        <div class="form login">
+            <h2 style="color: white">Login</h2>
+            <form onsubmit="return login(event)">
+                <div class="inputBox">
+                    <input type="text" required="required" id="loginEmail" placeholder="email">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <br>
+                <br>
+                <div class="inputBox">
+                    <input type="password" required="required" id="loginPassword" placeholder="password">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <br>
+                <br>
+                <div class="inputBox">
+                    <button type="submit" value="Login" id="btn">Login</button>
+                </div>
+            </form>
+            <p>Don't have an account? <span><a href="osignup.html">Sign Up</a></span></p>
+        </div>
+    </div>
+</body>
+<script>
+async function login(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    console.log(email, password);
+
+    try {
+        const response = await fetch("http://localhost:4000/ologin", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+        console.log(data,"from ologin")
+        if (response.ok) {
+             //localStorage.setItem('token', data.orphanageData.token);
+             //localStorage.setItem('uid', data.orphanageData.uid);
+            console.log('Login successful:', data,data.orphanageData.uid,data.orphanageData.token);
+            let getData =
+            {
+                uid: data.orphanageData.uid,
+                token: data.orphanageData.token,
+            }
+            localStorage.setItem('dataKey', JSON.stringify(getData));
+            console.log(getData)
+            alert()
+            window.location.href = 'needorphanisers.html'
+        } else {
+            console.error('Login failed:', data.message || 'Unknown error');
+        }
+    } catch (error) {
+        console.error('Error during login:', error.message || 'Unknown error');
+    }
+
+    return false;
+
+}
+</script>
+</html>

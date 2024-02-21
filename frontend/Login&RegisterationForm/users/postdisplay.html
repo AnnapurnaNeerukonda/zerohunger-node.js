@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Hunger Posts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #postsContainer {
+            max-width: 600px; /* Increased width */
+            width: 100%;
+        }
+
+        .post {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        .post:hover {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .post img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .post h2 {
+            margin: 10px 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .post p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .navbar {
+            background-color: #6edc1a;
+            padding: 10px 0;
+            width: 100%;
+            position:sticky;
+            top:0%;
+            left:0%;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: #fff;
+            padding:1%;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+      <a href="motivate.html">Home</a>
+        <a href="postdisplay.html">View Posts</a>
+        <a href="postinterface.html">Create Post</a>
+    </nav>
+<div id="postsContainer" style="margin-top: 30%;">
+    <!-- Posts will be dynamically added here -->
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const postsContainer = document.getElementById('postsContainer');
+
+        // Fetch data from the specified route
+        fetch('http://localhost:4000/get-posts/asdfvsdfgd44')
+            .then(response => response.json())
+            .then(data => {
+                // Check if the response contains posts array
+                if (data && data.posts) {
+                    // Iterate through posts and create HTML elements
+                    data.posts.forEach(post => {
+                        const postElement = document.createElement('div');
+                        postElement.classList.add('post');
+                        postElement.innerHTML = `
+                            <img src="${post.imageUrl}" alt="${post.title}">
+                            <h2>${post.title}</h2>
+                            <p>${post.description}</p>
+                        `;
+                        postsContainer.appendChild(postElement);
+                    });
+                } else {
+                    console.error('Invalid response format');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+</script>
+
+</body>
+</html>
